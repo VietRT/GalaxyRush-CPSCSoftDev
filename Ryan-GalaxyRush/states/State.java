@@ -14,7 +14,6 @@ import com.badlogic.gdx.math.Vector3;
     protected Vector3 mouse;
     protected GameStateManager gsm;
 
-    public State() {};
 
     public State(GameStateManager gsm) {
         this.gsm = gsm;

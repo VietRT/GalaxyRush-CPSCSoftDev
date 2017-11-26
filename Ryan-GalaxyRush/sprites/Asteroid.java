@@ -2,6 +2,7 @@ package com.ryant.game.sprites;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
 import java.util.Random;
 /**
@@ -33,7 +34,6 @@ public class Asteroid {
         posAsteroid = new Vector2(x, rand.nextInt(fluctuation));
         velocity = new Vector2(0, 0);
         asteroidBound = new Rectangle(posAsteroid.x, posAsteroid.y, Asteroid_WIDTH, Asteroid_HEIGHT);
-
     }
 
     public void update(float dt) {
@@ -74,6 +74,7 @@ public class Asteroid {
      //if they overlap, its a collision
         //System.out.println(player.overlaps(asteroidBound));
         return player.overlaps(asteroidBound);
+
     }
 
 

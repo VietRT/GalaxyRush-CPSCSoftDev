@@ -3,6 +3,7 @@ package com.ryant.game.states;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.BitmapFontCache;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.ryant.game.scrollDemo;
 import com.ryant.game.sprites.Asteroid;
@@ -22,6 +23,11 @@ public class PlayState extends State {
 
     private Array<Asteroid> asteroids;
 
+    private int scoreCount;
+    private String yourScore;
+    BitmapFont yourBitmap;
+
+
 
     public PlayState(GameStateManager gsm) {
         super(gsm);
@@ -36,6 +42,10 @@ public class PlayState extends State {
             asteroids.add(new Asteroid(i *(asteroidSpace + Asteroid.Asteroid_WIDTH)));
 
         }
+        scoreCount = 0;
+        yourScore = "score: 0";
+        yourBitmap = new BitmapFont();
+
 
     }
 
@@ -54,15 +64,17 @@ public class PlayState extends State {
     Astronaut.update(Gdx.graphics.getDeltaTime());
     cam.position.x = Astronaut.getPosition().x + 80;
 
-        for(Asteroid asteroid: asteroids) {
-            if(cam.position.x - (cam.viewportWidth / 2) > asteroid.getPosAsteroid().x + asteroid.getAsteroid().getWidth()) {
-                asteroid.reposition(asteroid.getPosAsteroid().x + ((Asteroid.Asteroid_WIDTH + asteroidSpace) * asteroidCount));
-            }
+    for(Asteroid asteroid: asteroids) {
+       if(cam.position.x - (cam.viewportWidth / 2) > asteroid.getPosAsteroid().x + asteroid.getAsteroid().getWidth()) {
+           asteroid.reposition(asteroid.getPosAsteroid().x + ((Asteroid.Asteroid_WIDTH + asteroidSpace) * asteroidCount));
+       }
 
-            if(asteroid.collides(Astronaut.getBounds()))
+            if(asteroid.collides(Astronaut.getBounds()) || Astronaut.getPosition().y < 0 || Astronaut.getPosition().y > 750)
             gsm.set(new PlayState(gsm));
-        }
+    }
+
         cam.update();
+
 
 
         for(Asteroid asteroid: asteroids) {
@@ -84,6 +96,15 @@ public class PlayState extends State {
         for(Asteroid asteroid: asteroids) {
             sb.draw(asteroid.getAsteroid(), asteroid.getPosAsteroid().x, asteroid.getPosAsteroid().y);
         }
+        for(Asteroid asteroid: asteroids) {
+            if(!asteroid.collides(Astronaut.getBounds())) {
+                scoreCount++;
+                yourScore = "score: " + scoreCount;
+            }
+        }
+        yourBitmap.setColor(1.0f, 1.0f, 1.0f, 1.0f);
+        yourBitmap.getData().setScale(1.5f);
+        yourBitmap.draw(sb, yourScore, cam.position.x + 95, cam.position.y + 380);
 
         sb.end();
 
