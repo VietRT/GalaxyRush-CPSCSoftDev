@@ -24,6 +24,7 @@ import com.badlogic.gdx.scenes.scene2d.*;
 
 public class MenuState extends State {
 
+    //background and ImageButton
     private Texture bg;
     private Image Background;
     private Stage stage;

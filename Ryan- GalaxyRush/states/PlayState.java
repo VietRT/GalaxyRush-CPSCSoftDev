@@ -22,7 +22,7 @@ public class PlayState extends State {
     private Texture Background;
 
     private Array<Asteroid> asteroids;
-
+    //Scoring
     private int scoreCount;
     private String yourScore;
     BitmapFont yourBitmap;
