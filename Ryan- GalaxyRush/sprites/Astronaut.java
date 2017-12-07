@@ -22,7 +22,7 @@ public class Astronaut {
     public Astronaut(int x, int y) {
         position = new Vector3(x, y, 0);
         velocity = new Vector3(0, 0 ,0);
-        Astronaut = new Texture("gameAstronaut4.png");
+        Astronaut = new Texture("gameAstronaut.png");
         bounds = new Rectangle(x, y, Astro_WIDTH, Astro_HEIGHT);
     }
 
@@ -35,6 +35,7 @@ public class Astronaut {
         //position.add(0, velocity.y, 0);
         position.add(movement * dt, velocity.y, 0);
         bounds.setPosition(position.x, position.y);
+
         //reverses what we scaled previously.
         velocity.scl(1/dt);
 

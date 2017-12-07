@@ -1,6 +1,7 @@
 package com.ryant.game.states;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.BitmapFontCache;
@@ -22,7 +23,8 @@ public class PlayState extends State {
     private Texture Background;
 
     private Array<Asteroid> asteroids;
-    //Scoring
+
+    float timeState;
     private int scoreCount;
     private String yourScore;
     BitmapFont yourBitmap;
@@ -42,8 +44,9 @@ public class PlayState extends State {
             asteroids.add(new Asteroid(i *(asteroidSpace + Asteroid.Asteroid_WIDTH)));
 
         }
+
         scoreCount = 0;
-        yourScore = "score: 0";
+        yourScore = "";
         yourBitmap = new BitmapFont();
 
 
@@ -89,22 +92,26 @@ public class PlayState extends State {
     public void render(SpriteBatch sb) {
         //basically sets it so the camera wont draw anything out of view.
         sb.setProjectionMatrix(cam.combined);
+
         sb.begin();
         sb.draw(Background, cam.position.x - (cam.viewportWidth), 0);
         sb.draw(Astronaut.getTexture(), Astronaut.getPosition().x, Astronaut.getPosition().y);
 
+
         for(Asteroid asteroid: asteroids) {
             sb.draw(asteroid.getAsteroid(), asteroid.getPosAsteroid().x, asteroid.getPosAsteroid().y);
         }
-        for(Asteroid asteroid: asteroids) {
-            if(!asteroid.collides(Astronaut.getBounds())) {
-                scoreCount++;
-                yourScore = "score: " + scoreCount;
-            }
+
+        timeState += Gdx.graphics.getDeltaTime();
+        if(timeState >= 1f) {
+            timeState = 0f;
+            scoreCount+=1;
+            yourScore = "score: " + scoreCount;
         }
-        yourBitmap.setColor(1.0f, 1.0f, 1.0f, 1.0f);
+
+        yourBitmap.setColor(Color.RED);
         yourBitmap.getData().setScale(1.5f);
-        yourBitmap.draw(sb, yourScore, cam.position.x + 95, cam.position.y + 380);
+        yourBitmap.draw(sb, yourScore, cam.position.x + 100, cam.position.y + 380);
 
         sb.end();
 
@@ -118,6 +125,8 @@ public class PlayState extends State {
                 dispose();
             }
         }
+        Astronaut.getTexture().dispose();
+        Background.dispose();
 
 
     }

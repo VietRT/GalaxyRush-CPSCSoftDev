@@ -24,16 +24,18 @@ import com.badlogic.gdx.scenes.scene2d.*;
 
 public class MenuState extends State {
 
-    //background and ImageButton
     private Texture bg;
     private Image Background;
     private Stage stage;
-    private Texture PlayBtn;
     Texture playbuttontext;
     TextureRegion textureRegion;
     TextureRegionDrawable textureRegionDrawable;
     ImageButton playbutton;
 
+    Texture optionbuttontext;
+    TextureRegion optiontextureRegion;
+    TextureRegionDrawable optiontextureRegionDrawable;
+    ImageButton optionbutton;
 
     public MenuState(GameStateManager gsm) {
 
@@ -41,7 +43,7 @@ public class MenuState extends State {
         bg = new Texture("spaceMenuBackground.gif");
         Background = new Image(bg);
         Background.setSize(scrollDemo.WIDTH, scrollDemo.HEIGHT);
-        PlayBtn = new Texture("bluePlayButton.png");
+        //PlayBtn = new Texture("bluePlayButton.png");
 
         playbuttontext = new Texture(Gdx.files.internal("bluePlayButton.png"));
         textureRegion = new TextureRegion(playbuttontext);
@@ -50,26 +52,35 @@ public class MenuState extends State {
         playbutton = new ImageButton(textureRegionDrawable);
         playbutton.setPosition(scrollDemo.WIDTH/ 5, scrollDemo.HEIGHT/2);
         stage = new Stage(new ScreenViewport());
-        stage.addActor(Background);
-        stage.addActor(playbutton);
+        optionbuttontext = new Texture(Gdx.files.internal("Options.png"));
+        optiontextureRegion = new TextureRegion(optionbuttontext);
+        optiontextureRegionDrawable = new TextureRegionDrawable(optiontextureRegion);
+        optionbutton = new ImageButton(optiontextureRegionDrawable);
+        optionbutton.setSize(50, 50);
+        optionbutton.setPosition(0, 0);
         Gdx.input.setInputProcessor(stage);
-        /*playbutton.addListener(new InputListener() {
-            public void clicked(InputEvent event, float x, float y) {
-                Gdx.app.log("start game", "pressed");
+        stage.addActor(Background);
+        stage.addActor(optionbutton);
+        stage.addActor(playbutton);
 
-            }
-        });*/
 
     }
 
     @Override
     public void handleInput() {
-         if(playbutton.isPressed()) {
-         gsm.set(new PlayState(gsm));
-         dispose();
-    }
+        if (playbutton.isPressed()) {
+            gsm.set(new PlayState(gsm));
+            dispose();
+
 
         }
+        if(optionbutton.isPressed()) {
+            gsm.set(new menuOptionsState(gsm));
+            dispose();
+        }
+    }
+
+
 
     @Override
     public void update(float dt) {
@@ -93,6 +104,6 @@ public class MenuState extends State {
 
     @Override
     public void dispose() {
-        PlayBtn.dispose();
+        playbuttontext.dispose();
     }
 }

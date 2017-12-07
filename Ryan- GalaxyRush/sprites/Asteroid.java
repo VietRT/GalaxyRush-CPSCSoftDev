@@ -2,7 +2,6 @@ package com.ryant.game.sprites;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
 import java.util.Random;
 /**
@@ -23,7 +22,7 @@ public class Asteroid {
     private Vector2 velocity;
 
     private Random rand;
-    private static final int moveX = -15;
+    private static final int moveX = -100;
     private static final int moveY = -10;
 
     public Asteroid(float x) {
